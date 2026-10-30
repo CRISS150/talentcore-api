@@ -14,27 +14,27 @@
     ## 🔄 El Flujo Multi-Agente (SDLC)
 
 
-    |            Script            |         Agente / Rol         |                 Responsabilidad                 |
-    |------------------------------|------------------------------|-------------------------------------------------|
-    | 00_test_conexion.py          | **Verificación**             | Valida la conectividad con el proveedor LLM.    |
+    |           Script           |         Agente / Rol         |                 Responsabilidad                 |
+    |----------------------------|------------------------------|-------------------------------------------------|
+    | 00_test_conexion.py        | **Verificación**             | Valida la conectividad con el proveedor LLM.    |
                                                                   
-    | 01_agente_product_owner.py   | **Senior IT Product Owner**  | Genera el documento de requerimientos funcionales|
-                                                                  |y criterios de aceptación (PRD.md).               |
+    | 01_agente_product_owner.py | **Senior IT Product Owner**  | Genera el documento de requerimientos funcionales|
+                                                                  |y criterios de aceptación (PRD.md).             |
+                                                                 
+    | 02_agente_arquitecto.py    | **Software Architect**       | Diseña los esquemas de base de datos, endpoints  |
+                                                                  |REST y reglas (ARCHITECTURE.md).                |
                                                                   
-    | 02_agente_arquitecto.py      | **Software Architect**       | Diseña los esquemas de base de datos, endpoints  |
-                                                                  |REST y reglas (ARCHITECTURE.md).                  |
+    | 03_agente_developer.py     | **Senior Python Backend Dev**| Genera el código de la API en FastAPI y modelos  |
+                                                                  |SQLAlchemy en `generated_project/app/`.         |
                                                                   
-    | 03_agente_developer.py       | **Senior Python Backend Dev**| Genera el código de la API en FastAPI y modelos  |
-                                                                  |SQLAlchemy en `generated_project/app/`.           |
-                                                                  
-    | 04_agente_qa.py              | **Senior QA Automation       | Diseña e implementa la suite de tests en `pytest`|
-                                   |     Engineer**               | cubriendo los criterios de aceptación en Gherkin.|
+    | 04_agente_qa.py            | **Senior QA Automation       | Diseña e implementa la suite de tests en `pytest`|
+                                 |     Engineer**               | cubriendo los criterios de aceptación en Gherkin.|
                                    
-    | 05_agente_reviewer.py        | **Staff Security & Code      | Audita seguridad, cobertura de reglas y calidad  |
-                                   |Reviewer**                    |de código (AUDIT_REPORT.md).                      |
+    | 05_agente_reviewer.py      | **Staff Security & Code      | Audita seguridad, cobertura de reglas y calidad  |
+                                 | Reviewer**                   | de código (AUDIT_REPORT.md).                     |
                                                   
-    | 06_agente_devops.py | **Senior DevOps Engineer** | Genera `Dockerfile`, `docker-compose.yml` y el pipeline de
-    GitHub Actions (`ci.yml`). |
+    | 06_agente_devops.py        | **Senior DevOps Engineer**   | Genera `Dockerfile`, `docker-compose.yml` y el   |
+                                                                | pipeline de GitHub Actions (`ci.yml`).           |   
 
      ## 🏢 Reglas de Negocio de TalentCore API
 
@@ -55,6 +55,14 @@
     - `PENDING` → Estado inicial al solicitar.
     - `APPROVED` → Descuenta el saldo disponible del empleado.
     - `REJECTED` → Solicitud desestimada (no descuenta saldo).
+
+      ## 🛠️ Tecnologías Utilizadas
+
+    • Agentes & Orquestación: Python, mini_crew, Groq Cloud API.
+    • Backend: FastAPI, Pydantic, SQLAlchemy, SQLite.
+    • Testing: PyTest, HTTPX / Starlette TestClient.
+    • DevOps: Docker, Docker Compose, GitHub Actions.
+
 
 
 https://talentcore-api-cristal.onrender.com/docs
