@@ -12,8 +12,6 @@
     administración de empleados y solicitudes de días de vacaciones con reglas de negocio y jerarquías de aprobación.
 
     ## 🔄 El Flujo Multi-Agente (SDLC)
-
-
     |           Script           |         Agente / Rol         |                 Responsabilidad                 |
     |----------------------------|------------------------------|-------------------------------------------------|
     | 00_test_conexion.py        | **Verificación**             | Valida la conectividad con el proveedor LLM.    |
@@ -37,7 +35,6 @@
                                                                 | pipeline de GitHub Actions (`ci.yml`).           |   
 
      ## 🏢 Reglas de Negocio de TalentCore API
-
     ### 1. Roles
     - **`ADMIN_RRHH`**: Único usuario autorizado para crear y registrar nuevos empleados.
     - **`EMPLEADO`**: Consulta su saldo disponible y genera solicitudes de vacaciones para sí mismo.
@@ -56,8 +53,64 @@
     - `APPROVED` → Descuenta el saldo disponible del empleado.
     - `REJECTED` → Solicitud desestimada (no descuenta saldo).
 
-      ## 🛠️ Tecnologías Utilizadas
+    
+    ## 🚀 Puesta en Marcha
+    ### Prerrequisitos
+    - Python 3.10+
+    - Clave de API de [Groq](https://console.groq.com/) (para ejecutar los agentes)
+    - Docker y Docker Compose (opcional, para despliegue del proyecto generado)
 
+    ### 1. Configuración del Entorno
+    Clona el repositorio y crea un archivo `.env` en la raíz:
+    ```bash
+    git clone https://github.com/TU_USUARIO/TU_REPOSITORIO.git
+    cd TU_REPOSITORIO
+    python -m venv venv
+    # En Windows:
+    venv\Scripts\activate
+    # En Linux/macOS:
+    source venv/bin/activate
+
+    pip install -r generated_project/requirements.txt python-dotenv
+
+   Crea tu archivo .env:
+
+    GROQ_API_KEY=tu_api_key_aqui
+    GROQ_MODEL_NAME=qwen/qwen3.8-27b
+    WORKSPACE_DIR=./generated_project
+
+  ### 2. Ejecutar la Cadena de Agentes
+
+  Puedes ejecutar cada etapa de forma secuencial:
+
+    python 00_test_conexion.py
+    python 01_agente_product_owner.py
+    python 02_agente_arquitecto.py
+    python 03_agente_developer.py
+    python 04_agente_qa.py
+    python 05_agente_reviewer.py
+    python 06_agente_devops.py
+
+  ### 3. Ejecutar la API Generada
+
+  #### Opción Local (Uvicorn):
+
+    cd generated_project
+    uvicorn app.main:app --reload --port 8000
+
+  La documentación interactiva Swagger estará disponible en: http://localhost:8000/docs
+
+  #### Opción Contenedor (Docker Compose):
+
+    cd generated_project
+    docker-compose up --build
+
+  ### 4. Ejecutar las Pruebas
+
+    cd generated_project
+    pytest tests/ -v
+
+      ## 🛠️ Tecnologías Utilizadas
     • Agentes & Orquestación: Python, mini_crew, Groq Cloud API.
     • Backend: FastAPI, Pydantic, SQLAlchemy, SQLite.
     • Testing: PyTest, HTTPX / Starlette TestClient.
