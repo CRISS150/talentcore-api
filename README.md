@@ -4,14 +4,14 @@
     **Agentes de IA autónomos** que simulan el ciclo de vida de desarrollo de software (**SDLC** - *Software
     Development Life Cycle*).
 
-    ## 📌 ¿De qué trata el proyecto?
+   ## 📌 ¿De qué trata el proyecto?
     Este repositorio contiene dos capas principales:
     1. **Flujo de Agentes SDLC (`00` a `06`)**: Utiliza LLMs (vía Groq / `mini_crew`) para
     orquestar la especificación, diseño, codificación, pruebas unitarias, auditoría de código y despliegue.
     2. **TalentCore API (`generated_project/`)**: El microservicio FastAPI resultante, diseñado para la
     administración de empleados y solicitudes de días de vacaciones con reglas de negocio y jerarquías de aprobación.
 
-    ## 🔄 El Flujo Multi-Agente (SDLC)
+   ## 🔄 El Flujo Multi-Agente (SDLC)
     |           Script           |         Agente / Rol         |                 Responsabilidad                 |
     |----------------------------|------------------------------|-------------------------------------------------|
     | 00_test_conexion.py        | **Verificación**             | Valida la conectividad con el proveedor LLM.    |
@@ -34,33 +34,34 @@
     | 06_agente_devops.py        | **Senior DevOps Engineer**   | Genera `Dockerfile`, `docker-compose.yml` y el   |
                                                                 | pipeline de GitHub Actions (`ci.yml`).           |   
 
-     ## 🏢 Reglas de Negocio de TalentCore API
-    ### 1. Roles
+   ## 🏢 Reglas de Negocio de TalentCore API
+   ### 1. Roles
     - **`ADMIN_RRHH`**: Único usuario autorizado para crear y registrar nuevos empleados.
     - **`EMPLEADO`**: Consulta su saldo disponible y genera solicitudes de vacaciones para sí mismo.
     - **`MANAGER`**: Revisa, aprueba o rechaza solicitudes de sus subordinados directos (`empleado.manager_id ==
     manager.id`).
 
-    ### 2. Cálculo de Saldo de Vacaciones
+   ### 2. Cálculo de Saldo de Vacaciones
     - **Antigüedad < 1 año**: `12` días base.
     - **Antigüedad ≥ 1 año**: min(12 + 2 × (años - 1), 20) días.
     - **Saldo Disponible**: días totales - ∑(días aprobados).
     - **Validación de saldo**: No se permite crear solicitudes si la suma de días en estado `PENDING` y `APPROVED`
     sobrepasa los días totales.
 
-    ### 3. Máquina de Estados
+   ### 3. Máquina de Estados
     - `PENDING` → Estado inicial al solicitar.
     - `APPROVED` → Descuenta el saldo disponible del empleado.
     - `REJECTED` → Solicitud desestimada (no descuenta saldo).
 
     
-    ## 🚀 Puesta en Marcha
+    
+   ## 🚀 Puesta en Marcha
     ### Prerrequisitos
     - Python 3.10+
     - Clave de API de [Groq](https://console.groq.com/) (para ejecutar los agentes)
     - Docker y Docker Compose (opcional, para despliegue del proyecto generado)
 
-    ### 1. Configuración del Entorno
+   ### 1. Configuración del Entorno
     Clona el repositorio y crea un archivo `.env` en la raíz:
     ```bash
     git clone https://github.com/TU_USUARIO/TU_REPOSITORIO.git
@@ -73,7 +74,7 @@
 
     pip install -r generated_project/requirements.txt python-dotenv
 
-   Crea tu archivo .env:
+  Crea tu archivo .env:
 
     GROQ_API_KEY=tu_api_key_aqui
     GROQ_MODEL_NAME=qwen/qwen3.8-27b
@@ -109,13 +110,13 @@
 
     cd generated_project
     pytest tests/ -v
+    
+   ## 🛠️ Tecnologías Utilizadas
 
-      ## 🛠️ Tecnologías Utilizadas
-    • Agentes & Orquestación: Python, mini_crew, Groq Cloud API.
-    • Backend: FastAPI, Pydantic, SQLAlchemy, SQLite.
-    • Testing: PyTest, HTTPX / Starlette TestClient.
-    • DevOps: Docker, Docker Compose, GitHub Actions.
-
+  • Agentes & Orquestación: Python, mini_crew, Groq Cloud API.
+  • Backend: FastAPI, Pydantic, SQLAlchemy, SQLite.
+  • Testing: PyTest, HTTPX / Starlette TestClient.
+  • DevOps: Docker, Docker Compose, GitHub Actions.
 
 
 https://talentcore-api-cristal.onrender.com/docs
